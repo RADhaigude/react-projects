@@ -20,6 +20,6 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         with:
           organization: RADhaigude
-          projectKey: react-projects
+          projectKey: RADhaigude-react-projects
           token: ${{ secrets.SONAR_TOKEN }}
 
