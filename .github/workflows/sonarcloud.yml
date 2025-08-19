@@ -1,27 +1,25 @@
 name: Test SonarCloud Connection
 
 on:
-  workflow_dispatch:  # Allows manual trigger in GitHub Actions
+  workflow_dispatch:  # manual trigger
 
 jobs:
   test-sonar:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      # 2️⃣ Set up Node.js (for React project)
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3️⃣ Test SonarCloud connection
-      - name: SonarCloud Connection Test
+      - name: Test SonarCloud connection
         uses: SonarSource/sonarcloud-github-action@master
         with:
           organization: RADhaigude
           projectKey: react-projects
           token: ${{ secrets.SONAR_TOKEN }}
-          # Optional dry run flag (checks connection without full scan)
-          args: "-Dsonar.analysis.mode=preview"
+
