@@ -1,14 +1,14 @@
-name: Test SonarCloud Connection
+name: SonarCloud Scan
 
 on:
-  workflow_dispatch:  # manual trigger
+  workflow_dispatch:   # allows manual trigger
 
 jobs:
-  test-sonar:
+  sonarcloud:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -16,10 +16,17 @@ jobs:
         with:
           node-version: 18
 
-      - name: Test SonarCloud connection
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          organization: RADhaigude
-          projectKey: RADhaigude-react-projects
-          token: ${{ secrets.SONAR_TOKEN }}
+          args: >
+            -Dsonar.projectKey=RADhaigude_react-projects
+            -Dsonar.organization=radhaigude
+            -Dsonar.sources=src
+            -Dsonar.host.url=https://sonarcloud.io
 
